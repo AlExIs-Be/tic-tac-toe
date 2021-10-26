@@ -1,0 +1,130 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+}
+#wrapper{
+    background-image: url(https://www.ambiance-sticker.com/images/imagecache/fiche_article/stickers-sol-marbre-blanc-rose-antique-antiderapant-ambiance-sticker-col-floor-RJ-1628.png);
+    background-size: contain;
+    height: 1000px;
+}
+div{
+    text-align: center;
+}
+h1{
+    color: #26160c;
+    margin: 0;
+    padding: 1em;
+}
+#plateau{
+    max-width: 1000px;
+    height: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 5px 5px grey;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2em auto;
+    background: radial-gradient(#E0CDA9, #DD985C, #7F3B1E);
+}
+.joueur{
+    border: 1px solid black;
+    border-radius: 10px;
+    max-width: 220px;
+    max-height: 300px;
+    padding: 1em ;
+    background-color: #E0CDA9;
+    color: #5F3013;
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.5s transform 2s;
+}
+.compteur{
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    padding: 0.15em;
+    border-radius: 5px;
+    background-color: #DD985C;
+    color: #26160c;
+    margin: 1em;
+    box-shadow: 0 0 5px #26160c;
+}
+.enCours{
+    background-color: #5F3013;
+    color: #E0CDA9;
+    animation: enCours 1s infinite alternate;
+    box-shadow: 0 0 5px #26160c ;
+}
+@keyframes enCours{
+    to{
+        transform: scale(1.1);
+    }
+}
+.gagnant{
+    transform: scale(1.1);
+    background: #7F3B1E;
+    color: #26160c;
+}
+#jeu{
+    flex: 1;
+    max-width: 330px;
+    height: 330px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 20px #7F3B1E;
+    background-color: #5F3013;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.cell{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #E0CDA9;
+    cursor: pointer;
+    font-size: 5em;
+    justify-self: center;
+    align-self: center;
+    transition: background-color 0.6s;
+
+}
+.cell:hover{
+    background-color: lightgrey;
+}
+#affichageFin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.affichage{
+    margin: 1em auto;
+    font-size: 3em;
+}
+#btn{
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#DD985C, #7F3B1E);
+}
+#btn:hover{
+    background: radial-gradient(#7F3B1E, #DD985C);
+}
+
+.cochee{
+    background-color: #7F3B1E;
+    color: #E0CDA9;
+    cursor: not-allowed;
+}
+.cochee:hover{
+    background-color: #7F3B1E;
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="https://cdn.icon-icons.com/icons2/390/PNG/512/tic-tac-toe_39453.png" type="png">
+    <title> Le Morpion</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div><h1>Le jeu du Morpion</h1></div>
+        <div id="plateau">
+            <div class="joueur O">
+                <p><span id="J1"></span> (O)</p>
+                <div id="compteurO" class="compteur">0</div>
+            </div>
+            <div id="jeu"></div>
+            <div class="joueur X">
+                <p><span id="J2"></span> (X)</p>
+                <div id="compteurX" class="compteur">0</div>
+            </div>
+        </div>
+        <div id="affichageFin">
+            <p class="affichage"></p>
+            <button id="btn" class="enCours">Rejouer</button>
+        </div>
+    </div>
+    <script>
+
+        function aGagne(){
+            let cells = jeu.querySelectorAll(".cell")
+                //test sur les diagonales
+            if(cells[0].innerText == cells[4].innerText  && cells[4].innerText == cells[8].innerText && cells[0].innerText!=""){
+                return true
+            }else if(cells[2].innerText == cells[4].innerText  && cells[4].innerText == cells[6].innerText && cells[2].innerText!=""){
+                return true
+            }else{
+                for(let i=0 ; i<=2 ; i++){
+                    //test sur les lignes 
+                    if( cells[i*3].innerText == cells[(i*3)+1].innerText  && cells[(i*3)+1].innerText == cells[(i*3)+2].innerText && cells[i*3].innerText!=""){
+                        return true
+                    //test sur les colonnes
+                    }else if(cells[i].innerText == cells[i+3].innerText  && cells[i+3].innerText == cells[i+6].innerText && cells[i].innerText!=""){
+                        return true
+                    }
+                }
+                return false
+            }     
+        }
+
+        function estFini(){
+            let cells =  jeu.querySelectorAll(".cell")
+            let nb = 0
+            for(let i=0 ; i<cells.length ; i++){
+                if( cells[i].classList.contains("cochee") ){
+                    nb++
+                }
+            }
+            if(nb == 9){
+                return true
+            }else return false
+        }
+
+        function testFin(){
+            if (aGagne() || estFini() ){
+                let cells =  jeu.querySelectorAll(".cell")
+                for(let i=0 ; i<cells.length ; i++){
+                    cells[i].removeEventListener("click", jouer)
+                }
+                if( aGagne() ){
+                    return 1
+                }else if (estFini){
+                    return 2
+                }
+            }else return 0
+        }
+
+        function joueurEnCours(joueur){
+            let joueurs = plateau.querySelectorAll(".joueur")
+            if ( joueurs[joueur].classList.contains("O") ){
+                joueurs[0].classList.add("enCours")
+                joueurs[1].classList.remove("enCours")
+            }else{
+                joueurs[1].classList.add("enCours")
+                joueurs[0].classList.remove("enCours")
+            }
+        }
+
+        function jouer(event){
+            if(!event.target.classList.contains("cochee") ){
+                event.target.classList.add("cochee")
+                if( joueur == 0 ){
+                event.target.innerText = "O"
+                    if (testFin() == 1){
+                        document.querySelector(".affichage").innerHTML = "&nwarr;  "+joueur1+" a gagné !"
+                        scoreO.innerText = ++score0
+                    }
+                joueur = 1
+                }
+                else{
+                event.target.innerText = "X"
+                    if (testFin() == 1){
+                        document.querySelector(".affichage").innerHTML = joueur2+" a gagné !  &nearr;"
+                        scoreX.innerText = ++score1
+                    }
+                joueur = 0
+                }
+            }
+            if( testFin() == 2){
+                document.querySelector(".affichage").textContent = "Vous êtes tous les deux nuls !"
+            }
+            if ( testFin()!=0){
+                document.getElementById("btn").style.display = "initial"
+                document.querySelector(".enCours").classList.add("gagnant")
+                document.querySelector(".enCours").classList.remove("enCours")
+            }else joueurEnCours(joueur)
+        }
+
+
+        document.getElementById("btn").addEventListener("click", ()=>Depart())
+        
+        let joueur = 0
+        let joueur1 = window.prompt("Quel nom pour le premier joueur?", "Dugland")
+        let joueur2 = window.prompt("Quel nom pour le deuxième joueur?", "Delaraie")
+        document.querySelector("#J1").innerText = joueur1
+        document.querySelector("#J2").innerText = joueur2
+        let scoreO = document.getElementById("compteurO")
+        let scoreX = document.getElementById("compteurX")
+        let score0 = 0
+        let score1 = 0
+
+        Depart()
+
+        function Depart(){
+            const cellule = document.createElement("div")
+            cellule.classList.add("cell")
+            const jeu = document.querySelector("#jeu")
+            jeu.innerHTML = ""
+            document.querySelector(".affichage").textContent = ""
+            document.getElementById("btn").style.display = "none"
+            if(document.querySelector(".gagnant")){
+                document.querySelector(".gagnant").classList.remove("gagnant")
+            }
+            joueurEnCours(joueur)
+            
+
+            for(let i=1 ; i<=9 ; i++){
+            let newcell = cellule.cloneNode()
+            jeu.appendChild(newcell)
+            newcell.addEventListener("click", jouer)
+            }
+        }
+        
+    </script>
+</body>
+</html>
